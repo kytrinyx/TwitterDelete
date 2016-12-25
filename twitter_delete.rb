@@ -52,6 +52,11 @@ def too_new_or_popular? tweet
   return false if tweet.retweeted?
   return false if tweet.text.start_with? "RT @"
 
+  if tweet.quote?
+    puts "Ignoring tweet: was quoted: #{tweet.text}"
+    return true
+  end
+
   if tweet.retweet_count >= @options[:rts]
     puts "Ignoring tweet: too RTd: #{tweet.text}"
     return true
